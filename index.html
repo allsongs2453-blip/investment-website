@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Investment Platform - Login</title>
+    <title>Investment Platform - Login & Register</title>
     <style>
         * {
             margin: 0;
@@ -32,11 +32,15 @@
             grid-template-columns: 1fr 1fr;
         }
 
-        .login-form-section {
+        .form-section {
             padding: 60px 40px;
             display: flex;
             flex-direction: column;
             justify-content: center;
+        }
+
+        .form-section.hidden {
+            display: none;
         }
 
         .login-info-section {
@@ -79,13 +83,13 @@
             margin-right: 10px;
         }
 
-        .login-form-section h1 {
+        .form-section h1 {
             color: #667eea;
             font-size: 2rem;
             margin-bottom: 10px;
         }
 
-        .login-form-section p {
+        .form-section p {
             color: #999;
             margin-bottom: 40px;
             font-size: 0.95rem;
@@ -138,7 +142,7 @@
             text-decoration: underline;
         }
 
-        .login-btn {
+        .submit-btn {
             width: 100%;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -150,27 +154,70 @@
             cursor: pointer;
             transition: all 0.3s ease;
             margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
-        .login-btn:hover {
+        .submit-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
         }
 
-        .signup-link {
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .role-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .role-tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: #999;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+
+        .role-tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .admin-password-field {
+            display: none;
+        }
+
+        .admin-password-field.show {
+            display: block;
+        }
+
+        .toggle-auth {
             text-align: center;
             color: #666;
             font-size: 0.95rem;
         }
 
-        .signup-link a {
+        .toggle-auth a {
             color: #667eea;
             text-decoration: none;
             font-weight: 600;
             cursor: pointer;
         }
 
-        .signup-link a:hover {
+        .toggle-auth a:hover {
             text-decoration: underline;
         }
 
@@ -188,6 +235,34 @@
             animation: slideDown 0.3s ease;
         }
 
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        .loading-spinner {
+            width: 18px;
+            height: 18px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top: 3px solid white;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         @keyframes slideDown {
             from {
                 transform: translateY(-10px);
@@ -195,61 +270,6 @@
             }
             to {
                 transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        /* Signup Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            animation: fadeIn 0.3s ease;
-        }
-
-        .modal.show {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 500px;
-            width: 100%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        }
-
-        .modal-content h2 {
-            color: #667eea;
-            margin-bottom: 25px;
-            font-size: 1.8rem;
-        }
-
-        .close-btn {
-            float: right;
-            font-size: 2rem;
-            cursor: pointer;
-            color: #999;
-            transition: color 0.3s ease;
-        }
-
-        .close-btn:hover {
-            color: #333;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
                 opacity: 1;
             }
         }
@@ -264,16 +284,12 @@
                 display: none;
             }
 
-            .login-form-section {
+            .form-section {
                 padding: 40px 25px;
             }
 
-            .login-form-section h1 {
+            .form-section h1 {
                 font-size: 1.5rem;
-            }
-
-            .modal-content {
-                padding: 30px 20px;
             }
         }
 
@@ -282,17 +298,16 @@
                 background: linear-gradient(135deg, #2d3561 0%, #1a1a2e 100%);
             }
 
-            .login-container,
-            .modal-content {
+            .login-container {
                 background: #1e1e2f;
             }
 
-            .login-form-section h1 {
+            .form-section h1 {
                 color: #00d4ff;
             }
 
-            .login-form-section p,
-            .signup-link {
+            .form-section p,
+            .toggle-auth {
                 color: #b0b0b0;
             }
 
@@ -312,11 +327,7 @@
             }
 
             .remember-forgot a,
-            .signup-link a {
-                color: #00d4ff;
-            }
-
-            .modal-content h2 {
+            .toggle-auth a {
                 color: #00d4ff;
             }
 
@@ -324,27 +335,54 @@
                 background: #721c24;
                 color: #f8d7da;
             }
+
+            .success-message {
+                background: #155724;
+                color: #d4edda;
+            }
+
+            .role-tab {
+                color: #808080;
+                border-bottom-color: #404050;
+            }
+
+            .role-tab.active {
+                color: #00d4ff;
+                border-bottom-color: #00d4ff;
+            }
         }
     </style>
 </head>
 <body>
     <div class="login-container">
         <!-- Login Form Section -->
-        <div class="login-form-section">
+        <div class="form-section" id="loginSection">
             <h1>Welcome Back!</h1>
             <p>Sign in to your investment account</p>
 
-            <div class="error-message" id="errorMessage"></div>
+            <div class="error-message" id="loginErrorMessage"></div>
+
+            <!-- Role Tabs -->
+            <div class="role-tabs">
+                <button class="role-tab active" onclick="switchLoginRole('user')">👤 User</button>
+                <button class="role-tab" onclick="switchLoginRole('admin')">👨‍💼 Admin</button>
+            </div>
 
             <form id="loginForm" onsubmit="handleLogin(event)">
                 <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" placeholder="your@email.com" required>
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" placeholder="your@email.com" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" placeholder="Enter your password" required>
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                </div>
+
+                <!-- Admin Password Field (Hidden by default) -->
+                <div class="form-group admin-password-field" id="adminPasswordField">
+                    <label for="adminPassword">Admin Secret Key</label>
+                    <input type="password" id="adminPassword" placeholder="Enter admin secret key">
                 </div>
 
                 <div class="remember-forgot">
@@ -354,11 +392,57 @@
                     <a onclick="forgotPassword()">Forgot Password?</a>
                 </div>
 
-                <button type="submit" class="login-btn">Sign In</button>
+                <button type="submit" class="submit-btn" id="loginBtn">
+                    <span id="loginBtnText">Sign In</span>
+                </button>
             </form>
 
-            <div class="signup-link">
-                Don't have an account? <a onclick="openSignup()">Sign Up Here</a>
+            <div class="toggle-auth">
+                Don't have an account? <a onclick="toggleAuthMode()">Register Here</a>
+            </div>
+        </div>
+
+        <!-- Register Form Section -->
+        <div class="form-section hidden" id="registerSection">
+            <h1>Create Account</h1>
+            <p>Join our investment platform today</p>
+
+            <div class="error-message" id="registerErrorMessage"></div>
+            <div class="success-message" id="registerSuccessMessage"></div>
+
+            <form id="registerForm" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label for="registerName">Full Name</label>
+                    <input type="text" id="registerName" placeholder="Enter your name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="registerEmail">Email Address</label>
+                    <input type="email" id="registerEmail" placeholder="your@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="registerPhone">Phone Number</label>
+                    <input type="tel" id="registerPhone" placeholder="9XXXXXXXXX" pattern="[0-9]{10}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="registerPassword">Password</label>
+                    <input type="password" id="registerPassword" placeholder="Create a password (min 6 chars)" minlength="6" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="registerConfirmPassword">Confirm Password</label>
+                    <input type="password" id="registerConfirmPassword" placeholder="Confirm password" minlength="6" required>
+                </div>
+
+                <button type="submit" class="submit-btn" id="registerBtn">
+                    <span id="registerBtnText">Create Account</span>
+                </button>
+            </form>
+
+            <div class="toggle-auth">
+                Already have an account? <a onclick="toggleAuthMode()">Sign In Here</a>
             </div>
         </div>
 
@@ -377,169 +461,198 @@
         </div>
     </div>
 
-    <!-- Signup Modal -->
-    <div class="modal" id="signupModal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeSignup()">&times;</span>
-            <h2>Create Account</h2>
-
-            <form id="signupForm" onsubmit="handleSignup(event)">
-                <div class="form-group">
-                    <label for="signupName">Full Name</label>
-                    <input type="text" id="signupName" placeholder="Enter your name" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="signupEmail">Email Address</label>
-                    <input type="email" id="signupEmail" placeholder="your@email.com" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="signupPhone">Phone Number</label>
-                    <input type="tel" id="signupPhone" placeholder="9XXXXXXXXX" pattern="[0-9]{10}" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="signupPassword">Password</label>
-                    <input type="password" id="signupPassword" placeholder="Create a password" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="confirmPassword">Confirm Password</label>
-                    <input type="password" id="confirmPassword" placeholder="Confirm password" required>
-                </div>
-
-                <button type="submit" class="login-btn">Create Account</button>
-            </form>
-        </div>
-    </div>
-
     <script>
+        // Admin Configuration
+        const ADMIN_CONFIG = {
+            email: 'allsongs2453@gmail.com',
+            secretKey: '123456',
+            phone: '9351328572'
+        };
+
+        // Current login role
+        let currentLoginRole = 'user';
+
         // Initialize users from localStorage
         let users = JSON.parse(localStorage.getItem('users')) || [];
-        const ADMIN_EMAIL = 'allsongs2453@gmail.com'; // Your Gmail
+
+        // Toggle between Login and Register
+        function toggleAuthMode() {
+            const loginSection = document.getElementById('loginSection');
+            const registerSection = document.getElementById('registerSection');
+            
+            loginSection.classList.toggle('hidden');
+            registerSection.classList.toggle('hidden');
+            
+            // Clear all fields
+            document.getElementById('loginForm').reset();
+            document.getElementById('registerForm').reset();
+            document.getElementById('loginErrorMessage').classList.remove('show');
+            document.getElementById('registerErrorMessage').classList.remove('show');
+            document.getElementById('registerSuccessMessage').classList.remove('show');
+        }
+
+        // Switch between User and Admin login
+        function switchLoginRole(role) {
+            currentLoginRole = role;
+            const tabs = document.querySelectorAll('.role-tab');
+            const adminField = document.getElementById('adminPasswordField');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (role === 'admin') {
+                adminField.classList.add('show');
+                document.getElementById('loginEmail').value = ADMIN_CONFIG.email;
+                document.getElementById('loginEmail').readOnly = true;
+            } else {
+                adminField.classList.remove('show');
+                document.getElementById('loginEmail').value = '';
+                document.getElementById('loginEmail').readOnly = false;
+            }
+            
+            document.getElementById('loginPassword').value = '';
+            document.getElementById('adminPassword').value = '';
+            document.getElementById('loginErrorMessage').classList.remove('show');
+        }
 
         // Handle Login
         function handleLogin(event) {
             event.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+            
+            const loginBtn = document.getElementById('loginBtn');
+            const btnText = document.getElementById('loginBtnText');
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            loginBtn.disabled = true;
+            btnText.innerHTML = '<div class="loading-spinner"></div> Signing in...';
 
-            const user = users.find(u => u.email === email && u.password === password);
+            // Simulate 2-3 second delay
+            setTimeout(() => {
+                if (currentLoginRole === 'admin') {
+                    // Admin login
+                    const adminPassword = document.getElementById('adminPassword').value;
+                    
+                    if (email === ADMIN_CONFIG.email && password === ADMIN_CONFIG.secretKey && adminPassword === ADMIN_CONFIG.secretKey) {
+                        const adminUser = {
+                            id: 'admin_001',
+                            name: 'Admin',
+                            email: ADMIN_CONFIG.email,
+                            role: 'admin'
+                        };
+                        localStorage.setItem('loggedInUser', JSON.stringify(adminUser));
+                        window.location.href = 'admin.html';
+                    } else {
+                        showLoginError('❌ Invalid admin email, password, or secret key!');
+                        loginBtn.disabled = false;
+                        btnText.textContent = 'Sign In';
+                    }
+                } else {
+                    // User login
+                    const user = users.find(u => u.email === email && u.password === password);
 
-            if (user) {
-                localStorage.setItem('loggedInUser', JSON.stringify(user));
-                window.location.href = 'dashboard.html';
-            } else {
-                showError('Invalid email or password!');
-            }
+                    if (user) {
+                        localStorage.setItem('loggedInUser', JSON.stringify(user));
+                        window.location.href = 'dashboard.html';
+                    } else {
+                        showLoginError('❌ Invalid email or password!');
+                        loginBtn.disabled = false;
+                        btnText.textContent = 'Sign In';
+                    }
+                }
+            }, 2500); // 2.5 seconds delay
         }
 
-        // Handle Signup
-        function handleSignup(event) {
+        // Handle Register
+        function handleRegister(event) {
             event.preventDefault();
-            const name = document.getElementById('signupName').value;
-            const email = document.getElementById('signupEmail').value;
-            const phone = document.getElementById('signupPhone').value;
-            const password = document.getElementById('signupPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
 
+            const registerBtn = document.getElementById('registerBtn');
+            const btnText = document.getElementById('registerBtnText');
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const phone = document.getElementById('registerPhone').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('registerConfirmPassword').value;
+
+            // Validation
             if (password !== confirmPassword) {
-                alert('❌ Passwords do not match!');
+                showRegisterError('❌ Passwords do not match!');
                 return;
             }
 
             if (users.find(u => u.email === email)) {
-                alert('❌ Email already registered!');
+                showRegisterError('❌ Email already registered!');
                 return;
             }
 
-            const newUser = {
-                id: Date.now(),
-                name,
-                email,
-                phone,
-                password,
-                createdAt: new Date().toLocaleString('en-IN')
-            };
+            registerBtn.disabled = true;
+            btnText.innerHTML = '<div class="loading-spinner"></div> Creating...';
 
-            users.push(newUser);
-            localStorage.setItem('users', JSON.stringify(users));
+            // Simulate 2-3 second delay for registration
+            setTimeout(() => {
+                const newUser = {
+                    id: Date.now(),
+                    name,
+                    email,
+                    phone,
+                    password,
+                    role: 'user',
+                    createdAt: new Date().toLocaleString('en-IN')
+                };
 
-            // Send email notification to admin
-            sendEmailToAdmin(name, email, phone);
+                users.push(newUser);
+                localStorage.setItem('users', JSON.stringify(users));
 
-            alert('✅ Account created successfully! Please login.');
-            closeSignup();
-            document.getElementById('loginForm').reset();
+                // Show success message
+                showRegisterSuccess('✅ Account created successfully! Redirecting...');
+
+                // Auto-login the user and redirect
+                setTimeout(() => {
+                    localStorage.setItem('loggedInUser', JSON.stringify(newUser));
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+            }, 2500); // 2.5 seconds delay
         }
 
-        // Show Error Message
-        function showError(message) {
-            const errorDiv = document.getElementById('errorMessage');
+        // Show Login Error
+        function showLoginError(message) {
+            const errorDiv = document.getElementById('loginErrorMessage');
             errorDiv.textContent = message;
             errorDiv.classList.add('show');
             setTimeout(() => errorDiv.classList.remove('show'), 4000);
         }
 
-        // Open Signup Modal
-        function openSignup() {
-            document.getElementById('signupModal').classList.add('show');
+        // Show Register Error
+        function showRegisterError(message) {
+            const errorDiv = document.getElementById('registerErrorMessage');
+            errorDiv.textContent = message;
+            errorDiv.classList.add('show');
+            setTimeout(() => errorDiv.classList.remove('show'), 4000);
         }
 
-        // Close Signup Modal
-        function closeSignup() {
-            document.getElementById('signupModal').classList.remove('show');
-            document.getElementById('signupForm').reset();
+        // Show Register Success
+        function showRegisterSuccess(message) {
+            const successDiv = document.getElementById('registerSuccessMessage');
+            successDiv.textContent = message;
+            successDiv.classList.add('show');
         }
 
         // Forgot Password
         function forgotPassword() {
-            alert('📧 Password reset link has been sent to your email (This is a demo)');
-        }
-
-        // Send Email to Admin using EmailJS (Free Service)
-        function sendEmailToAdmin(name, email, phone) {
-            // Using a simple fetch to a backend service
-            // For this demo, we'll simulate sending an email
-            const emailData = {
-                to: ADMIN_EMAIL,
-                subject: `New User Registration - ${name}`,
-                message: `
-                    New user has registered!
-                    
-                    Name: ${name}
-                    Email: ${email}
-                    Phone: ${phone}
-                    Registration Time: ${new Date().toLocaleString('en-IN')}
-                `
-            };
-
-            // Store notification for admin
-            let notifications = JSON.parse(localStorage.getItem('adminNotifications')) || [];
-            notifications.push({
-                type: 'new_user',
-                data: emailData,
-                timestamp: new Date().toLocaleString('en-IN')
-            });
-            localStorage.setItem('adminNotifications', JSON.stringify(notifications));
-
-            console.log('📧 Email notification would be sent to admin:', emailData);
+            alert('📧 Password reset link has been sent to your email (Demo Feature)');
         }
 
         // Check if user already logged in
         window.addEventListener('load', () => {
             const loggedInUser = localStorage.getItem('loggedInUser');
             if (loggedInUser) {
-                window.location.href = 'dashboard.html';
-            }
-        });
-
-        // Close modal when clicking outside
-        window.addEventListener('click', (event) => {
-            const modal = document.getElementById('signupModal');
-            if (event.target === modal) {
-                closeSignup();
+                const user = JSON.parse(loggedInUser);
+                if (user.role === 'admin') {
+                    window.location.href = 'admin.html';
+                } else {
+                    window.location.href = 'dashboard.html';
+                }
             }
         });
     </script>
