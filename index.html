@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Platform - Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            max-width: 900px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .login-form-section {
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-info-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .login-info-section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .login-info-section p {
+            font-size: 1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .features-list {
+            text-align: left;
+            display: inline-block;
+        }
+
+        .features-list li {
+            list-style: none;
+            padding: 10px 0;
+            font-size: 0.95rem;
+        }
+
+        .features-list li:before {
+            content: "✓ ";
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .login-form-section h1 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .login-form-section p {
+            color: #999;
+            margin-bottom: 40px;
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+        }
+
+        .remember-forgot a {
+            color: #667eea;
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .remember-forgot a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .login-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .signup-link {
+            text-align: center;
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .signup-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-10px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Signup Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-content h2 {
+            color: #667eea;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+
+        .close-btn {
+            float: right;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: #333;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .login-container {
+                grid-template-columns: 1fr;
+            }
+
+            .login-info-section {
+                display: none;
+            }
+
+            .login-form-section {
+                padding: 40px 25px;
+            }
+
+            .login-form-section h1 {
+                font-size: 1.5rem;
+            }
+
+            .modal-content {
+                padding: 30px 20px;
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: linear-gradient(135deg, #2d3561 0%, #1a1a2e 100%);
+            }
+
+            .login-container,
+            .modal-content {
+                background: #1e1e2f;
+            }
+
+            .login-form-section h1 {
+                color: #00d4ff;
+            }
+
+            .login-form-section p,
+            .signup-link {
+                color: #b0b0b0;
+            }
+
+            .form-group label {
+                color: #e0e0e0;
+            }
+
+            .form-group input {
+                background: #2a2a3e;
+                color: #e0e0e0;
+                border-color: #404050;
+            }
+
+            .form-group input:focus {
+                border-color: #00d4ff;
+                box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+            }
+
+            .remember-forgot a,
+            .signup-link a {
+                color: #00d4ff;
+            }
+
+            .modal-content h2 {
+                color: #00d4ff;
+            }
+
+            .error-message {
+                background: #721c24;
+                color: #f8d7da;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <!-- Login Form Section -->
+        <div class="login-form-section">
+            <h1>Welcome Back!</h1>
+            <p>Sign in to your investment account</p>
+
+            <div class="error-message" id="errorMessage"></div>
+
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="your@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                </div>
+
+                <div class="remember-forgot">
+                    <label>
+                        <input type="checkbox" id="remember"> Remember me
+                    </label>
+                    <a onclick="forgotPassword()">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="login-btn">Sign In</button>
+            </form>
+
+            <div class="signup-link">
+                Don't have an account? <a onclick="openSignup()">Sign Up Here</a>
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="login-info-section">
+            <h2>💰 Investment Hub</h2>
+            <p>Manage your investments with ease and confidence</p>
+            
+            <ul class="features-list">
+                <li>Real-time Global Clock</li>
+                <li>Easy Deposits & Recharge</li>
+                <li>Secure Transactions</li>
+                <li>Admin Dashboard</li>
+                <li>24/7 Support</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="modal" id="signupModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeSignup()">&times;</span>
+            <h2>Create Account</h2>
+
+            <form id="signupForm" onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" placeholder="Enter your name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="signupEmail">Email Address</label>
+                    <input type="email" id="signupEmail" placeholder="your@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="signupPhone">Phone Number</label>
+                    <input type="tel" id="signupPhone" placeholder="9XXXXXXXXX" pattern="[0-9]{10}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" placeholder="Create a password" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" placeholder="Confirm password" required>
+                </div>
+
+                <button type="submit" class="login-btn">Create Account</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Initialize users from localStorage
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+        const ADMIN_EMAIL = 'allsongs2453@gmail.com'; // Your Gmail
+
+        // Handle Login
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const user = users.find(u => u.email === email && u.password === password);
+
+            if (user) {
+                localStorage.setItem('loggedInUser', JSON.stringify(user));
+                window.location.href = 'dashboard.html';
+            } else {
+                showError('Invalid email or password!');
+            }
+        }
+
+        // Handle Signup
+        function handleSignup(event) {
+            event.preventDefault();
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const phone = document.getElementById('signupPhone').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                alert('❌ Passwords do not match!');
+                return;
+            }
+
+            if (users.find(u => u.email === email)) {
+                alert('❌ Email already registered!');
+                return;
+            }
+
+            const newUser = {
+                id: Date.now(),
+                name,
+                email,
+                phone,
+                password,
+                createdAt: new Date().toLocaleString('en-IN')
+            };
+
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+
+            // Send email notification to admin
+            sendEmailToAdmin(name, email, phone);
+
+            alert('✅ Account created successfully! Please login.');
+            closeSignup();
+            document.getElementById('loginForm').reset();
+        }
+
+        // Show Error Message
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.classList.add('show');
+            setTimeout(() => errorDiv.classList.remove('show'), 4000);
+        }
+
+        // Open Signup Modal
+        function openSignup() {
+            document.getElementById('signupModal').classList.add('show');
+        }
+
+        // Close Signup Modal
+        function closeSignup() {
+            document.getElementById('signupModal').classList.remove('show');
+            document.getElementById('signupForm').reset();
+        }
+
+        // Forgot Password
+        function forgotPassword() {
+            alert('📧 Password reset link has been sent to your email (This is a demo)');
+        }
+
+        // Send Email to Admin using EmailJS (Free Service)
+        function sendEmailToAdmin(name, email, phone) {
+            // Using a simple fetch to a backend service
+            // For this demo, we'll simulate sending an email
+            const emailData = {
+                to: ADMIN_EMAIL,
+                subject: `New User Registration - ${name}`,
+                message: `
+                    New user has registered!
+                    
+                    Name: ${name}
+                    Email: ${email}
+                    Phone: ${phone}
+                    Registration Time: ${new Date().toLocaleString('en-IN')}
+                `
+            };
+
+            // Store notification for admin
+            let notifications = JSON.parse(localStorage.getItem('adminNotifications')) || [];
+            notifications.push({
+                type: 'new_user',
+                data: emailData,
+                timestamp: new Date().toLocaleString('en-IN')
+            });
+            localStorage.setItem('adminNotifications', JSON.stringify(notifications));
+
+            console.log('📧 Email notification would be sent to admin:', emailData);
+        }
+
+        // Check if user already logged in
+        window.addEventListener('load', () => {
+            const loggedInUser = localStorage.getItem('loggedInUser');
+            if (loggedInUser) {
+                window.location.href = 'dashboard.html';
+            }
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (event) => {
+            const modal = document.getElementById('signupModal');
+            if (event.target === modal) {
+                closeSignup();
+            }
+        });
+    </script>
+</body>
+</html>
