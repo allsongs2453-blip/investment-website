@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Clock - Multiple Time Zones</title>
+    <title>Digital Clock & Investment Platform</title>
     <style>
         * {
             margin: 0;
@@ -35,6 +35,57 @@
             font-weight: 700;
         }
 
+        /* Tab Navigation */
+        .tab-navigation {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .tab-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Clock Section */
         .clocks-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -103,6 +154,299 @@
             font-weight: 500;
         }
 
+        /* Deposit Section */
+        .deposit-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .deposit-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+        }
+
+        .deposit-card h2 {
+            color: #667eea;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .upi-section {
+            background: #f5f7fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 25px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .upi-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .upi-details {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .upi-id {
+            font-weight: 600;
+            color: #333;
+            font-size: 1.1rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        .copy-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* Admin Section */
+        .admin-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+        }
+
+        .admin-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .admin-header h2 {
+            font-size: 1.5rem;
+        }
+
+        .admin-password-section {
+            margin-bottom: 25px;
+        }
+
+        .admin-password-section label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .admin-password-section input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .admin-password-section input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .admin-unlock-btn {
+            width: 100%;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .admin-unlock-btn:hover {
+            background: #764ba2;
+        }
+
+        .admin-content {
+            display: none;
+        }
+
+        .admin-content.unlocked {
+            display: block;
+        }
+
+        .transaction-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .transaction-table th {
+            background: #f0f0f0;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .transaction-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .transaction-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-approved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            margin-right: 5px;
+        }
+
+        .approve-btn {
+            background: #28a745;
+            color: white;
+        }
+
+        .approve-btn:hover {
+            background: #218838;
+        }
+
+        .reject-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        .reject-btn:hover {
+            background: #c82333;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-10px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             h1 {
@@ -121,6 +465,28 @@
 
             .clock-display {
                 font-size: 2.2rem;
+            }
+
+            .deposit-card {
+                padding: 25px;
+            }
+
+            .tab-navigation {
+                gap: 5px;
+            }
+
+            .tab-btn {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+
+            .transaction-table {
+                font-size: 0.9rem;
+            }
+
+            .transaction-table th,
+            .transaction-table td {
+                padding: 8px;
             }
         }
 
@@ -143,8 +509,25 @@
                 font-size: 1.8rem;
             }
 
-            .timezone-name {
-                font-size: 0.8rem;
+            .deposit-card {
+                padding: 20px;
+            }
+
+            .tab-navigation {
+                flex-direction: column;
+            }
+
+            .tab-btn {
+                width: 100%;
+            }
+
+            .upi-details {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .copy-btn {
+                width: 100%;
             }
         }
 
@@ -154,7 +537,9 @@
                 background: linear-gradient(135deg, #2d3561 0%, #1a1a2e 100%);
             }
 
-            .clock-card {
+            .clock-card,
+            .deposit-card,
+            .admin-section {
                 background: #1e1e2f;
                 color: #e0e0e0;
             }
@@ -170,73 +555,231 @@
             .clock-date {
                 color: #808080;
             }
+
+            .form-group label {
+                color: #e0e0e0;
+            }
+
+            .form-group input,
+            .form-group select {
+                background: #2a2a3e;
+                color: #e0e0e0;
+                border-color: #404050;
+            }
+
+            .upi-section {
+                background: #2a2a3e;
+                border-left-color: #00d4ff;
+            }
+
+            .upi-section h3 {
+                color: #00d4ff;
+            }
+
+            .upi-details {
+                background: #1e1e2f;
+            }
+
+            .upi-id {
+                color: #00d4ff;
+            }
+
+            .transaction-table th {
+                background: #2a2a3e;
+                color: #e0e0e0;
+                border-bottom-color: #404050;
+            }
+
+            .transaction-table td {
+                border-bottom-color: #404050;
+            }
+
+            .transaction-table tr:hover {
+                background: #2a2a3e;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Global Time Zones Clock</h1>
+        <h1>💰 Investment Platform & Clock</h1>
         
-        <div class="clocks-grid">
-            <!-- New York -->
-            <div class="clock-card">
-                <div class="timezone-name">New York (EST)</div>
-                <div class="clock-display" id="clock-ny">00:00:00</div>
-                <div class="clock-date" id="date-ny">--</div>
-            </div>
+        <!-- Tab Navigation -->
+        <div class="tab-navigation">
+            <button class="tab-btn active" onclick="showTab('clock')">⏰ Clock</button>
+            <button class="tab-btn" onclick="showTab('deposit')">💳 Deposit/Recharge</button>
+            <button class="tab-btn" onclick="showTab('admin')">👨‍💼 Admin Panel</button>
+        </div>
 
-            <!-- London -->
-            <div class="clock-card">
-                <div class="timezone-name">London (GMT)</div>
-                <div class="clock-display" id="clock-london">00:00:00</div>
-                <div class="clock-date" id="date-london">--</div>
-            </div>
+        <!-- Clock Tab -->
+        <div id="clock" class="tab-content active">
+            <div class="clocks-grid">
+                <!-- New York -->
+                <div class="clock-card">
+                    <div class="timezone-name">New York (EST)</div>
+                    <div class="clock-display" id="clock-ny">00:00:00</div>
+                    <div class="clock-date" id="date-ny">--</div>
+                </div>
 
-            <!-- Tokyo -->
-            <div class="clock-card">
-                <div class="timezone-name">Tokyo (JST)</div>
-                <div class="clock-display" id="clock-tokyo">00:00:00</div>
-                <div class="clock-date" id="date-tokyo">--</div>
-            </div>
+                <!-- London -->
+                <div class="clock-card">
+                    <div class="timezone-name">London (GMT)</div>
+                    <div class="clock-display" id="clock-london">00:00:00</div>
+                    <div class="clock-date" id="date-london">--</div>
+                </div>
 
-            <!-- Sydney -->
-            <div class="clock-card">
-                <div class="timezone-name">Sydney (AEDT)</div>
-                <div class="clock-display" id="clock-sydney">00:00:00</div>
-                <div class="clock-date" id="date-sydney">--</div>
-            </div>
+                <!-- Tokyo -->
+                <div class="clock-card">
+                    <div class="timezone-name">Tokyo (JST)</div>
+                    <div class="clock-display" id="clock-tokyo">00:00:00</div>
+                    <div class="clock-date" id="date-tokyo">--</div>
+                </div>
 
-            <!-- Dubai -->
-            <div class="clock-card">
-                <div class="timezone-name">Dubai (GST)</div>
-                <div class="clock-display" id="clock-dubai">00:00:00</div>
-                <div class="clock-date" id="date-dubai">--</div>
-            </div>
+                <!-- Sydney -->
+                <div class="clock-card">
+                    <div class="timezone-name">Sydney (AEDT)</div>
+                    <div class="clock-display" id="clock-sydney">00:00:00</div>
+                    <div class="clock-date" id="date-sydney">--</div>
+                </div>
 
-            <!-- Singapore -->
-            <div class="clock-card">
-                <div class="timezone-name">Singapore (SGT)</div>
-                <div class="clock-display" id="clock-singapore">00:00:00</div>
-                <div class="clock-date" id="date-singapore">--</div>
-            </div>
+                <!-- Dubai -->
+                <div class="clock-card">
+                    <div class="timezone-name">Dubai (GST)</div>
+                    <div class="clock-display" id="clock-dubai">00:00:00</div>
+                    <div class="clock-date" id="date-dubai">--</div>
+                </div>
 
-            <!-- Hong Kong -->
-            <div class="clock-card">
-                <div class="timezone-name">Hong Kong (HKT)</div>
-                <div class="clock-display" id="clock-hongkong">00:00:00</div>
-                <div class="clock-date" id="date-hongkong">--</div>
-            </div>
+                <!-- Singapore -->
+                <div class="clock-card">
+                    <div class="timezone-name">Singapore (SGT)</div>
+                    <div class="clock-display" id="clock-singapore">00:00:00</div>
+                    <div class="clock-date" id="date-singapore">--</div>
+                </div>
 
-            <!-- India -->
-            <div class="clock-card">
-                <div class="timezone-name">India (IST)</div>
-                <div class="clock-display" id="clock-india">00:00:00</div>
-                <div class="clock-date" id="date-india">--</div>
+                <!-- Hong Kong -->
+                <div class="clock-card">
+                    <div class="timezone-name">Hong Kong (HKT)</div>
+                    <div class="clock-display" id="clock-hongkong">00:00:00</div>
+                    <div class="clock-date" id="date-hongkong">--</div>
+                </div>
+
+                <!-- India -->
+                <div class="clock-card">
+                    <div class="timezone-name">India (IST)</div>
+                    <div class="clock-display" id="clock-india">00:00:00</div>
+                    <div class="clock-date" id="date-india">--</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Deposit Tab -->
+        <div id="deposit" class="tab-content">
+            <div class="deposit-container">
+                <div class="deposit-card">
+                    <h2>💳 Deposit / Recharge</h2>
+                    
+                    <div class="success-message" id="successMessage">
+                        ✅ Request submitted successfully! Admin will verify and approve soon.
+                    </div>
+
+                    <form id="depositForm" onsubmit="submitDeposit(event)">
+                        <div class="form-group">
+                            <label for="userName">Full Name</label>
+                            <input type="text" id="userName" placeholder="Enter your name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="userEmail">Email Address</label>
+                            <input type="email" id="userEmail" placeholder="your@email.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="userPhone">Phone Number</label>
+                            <input type="tel" id="userPhone" placeholder="9XXXXXXXXX" pattern="[0-9]{10}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="amount">Amount (₹)</label>
+                            <input type="number" id="amount" placeholder="Enter amount" min="100" required>
+                        </div>
+
+                        <div class="upi-section">
+                            <h3>📱 UPI Payment Details</h3>
+                            <p style="color: #666; margin-bottom: 15px;">Send payment to this UPI ID:</p>
+                            
+                            <div class="upi-details">
+                                <span class="upi-id">9351328572@fam</span>
+                                <button type="button" class="copy-btn" onclick="copyUPI()">📋 Copy</button>
+                            </div>
+
+                            <p style="color: #999; font-size: 0.9rem; margin-top: 15px;">
+                                ⚠️ After payment, your request will be verified by admin within 24 hours.
+                            </p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="transactionId">Transaction ID (After Payment)</label>
+                            <input type="text" id="transactionId" placeholder="Enter UPI transaction ID" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="paymentMode">Payment Method</label>
+                            <select id="paymentMode" required>
+                                <option value="">-- Select Payment Method --</option>
+                                <option value="UPI">UPI</option>
+                                <option value="Bank Transfer">Bank Transfer</option>
+                                <option value="Google Pay">Google Pay</option>
+                                <option value="PhonePe">PhonePe</option>
+                                <option value="Paytm">Paytm</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="submit-btn">Submit Deposit Request</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Tab -->
+        <div id="admin" class="tab-content">
+            <div class="admin-section">
+                <div class="admin-header">
+                    <h2>👨‍💼 Admin Control Panel</h2>
+                </div>
+
+                <div class="admin-password-section">
+                    <label for="adminPassword">Admin Password</label>
+                    <input type="password" id="adminPassword" placeholder="Enter admin password">
+                    <button class="admin-unlock-btn" onclick="unlockAdmin()">🔓 Unlock Admin Panel</button>
+                </div>
+
+                <div class="admin-content" id="adminContent">
+                    <h3 style="color: #667eea; margin-bottom: 20px;">📊 Pending Deposit Requests</h3>
+                    
+                    <table class="transaction-table" id="transactionTable">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Name</th>
+                                <th>Amount</th>
+                                <th>Transaction ID</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <!-- Transactions will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
+        // Admin Password
+        const ADMIN_PASSWORD = "admin123";
+
         // Time Zone Configuration
         const timeZones = {
             'ny': { name: 'America/New_York', element: 'clock-ny', dateElement: 'date-ny' },
@@ -249,15 +792,123 @@
             'india': { name: 'Asia/Kolkata', element: 'clock-india', dateElement: 'date-india' }
         };
 
-        // Format time with leading zero
-        function formatTime(num) {
-            return num < 10 ? '0' + num : num;
+        // Local Storage for transactions
+        let allTransactions = JSON.parse(localStorage.getItem('deposits')) || [];
+
+        // Tab switching
+        function showTab(tabName) {
+            const tabs = document.querySelectorAll('.tab-content');
+            const btns = document.querySelectorAll('.tab-btn');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            btns.forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+
+            if (tabName === 'clock') {
+                updateAllClocks();
+            }
         }
 
-        // Update clock display
+        // Copy UPI ID
+        function copyUPI() {
+            const upiId = "9351328572@fam";
+            navigator.clipboard.writeText(upiId).then(() => {
+                alert('✅ UPI ID copied to clipboard!');
+            });
+        }
+
+        // Submit Deposit Form
+        function submitDeposit(e) {
+            e.preventDefault();
+
+            const deposit = {
+                id: Date.now(),
+                date: new Date().toLocaleDateString('en-IN'),
+                name: document.getElementById('userName').value,
+                email: document.getElementById('userEmail').value,
+                phone: document.getElementById('userPhone').value,
+                amount: document.getElementById('amount').value,
+                transactionId: document.getElementById('transactionId').value,
+                paymentMode: document.getElementById('paymentMode').value,
+                status: 'Pending',
+                submittedAt: new Date().toLocaleString('en-IN')
+            };
+
+            allTransactions.push(deposit);
+            localStorage.setItem('deposits', JSON.stringify(allTransactions));
+
+            // Show success message
+            const successMsg = document.getElementById('successMessage');
+            successMsg.classList.add('show');
+            setTimeout(() => successMsg.classList.remove('show'), 4000);
+
+            // Reset form
+            document.getElementById('depositForm').reset();
+        }
+
+        // Unlock Admin Panel
+        function unlockAdmin() {
+            const password = document.getElementById('adminPassword').value;
+            
+            if (password === ADMIN_PASSWORD) {
+                document.getElementById('adminContent').classList.add('unlocked');
+                document.getElementById('adminPassword').value = '';
+                loadTransactions();
+            } else {
+                alert('❌ Incorrect password!');
+                document.getElementById('adminPassword').value = '';
+            }
+        }
+
+        // Load transactions in admin panel
+        function loadTransactions() {
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = '';
+
+            if (allTransactions.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #999;">No deposit requests yet</td></tr>';
+                return;
+            }
+
+            allTransactions.forEach((transaction, index) => {
+                const row = `
+                    <tr>
+                        <td>${transaction.date}</td>
+                        <td>${transaction.name}</td>
+                        <td>₹${transaction.amount}</td>
+                        <td>${transaction.transactionId}</td>
+                        <td><span class="status-badge status-${transaction.status.toLowerCase()}">${transaction.status}</span></td>
+                        <td>
+                            <button class="action-btn approve-btn" onclick="approveTransaction(${index})">✓ Approve</button>
+                            <button class="action-btn reject-btn" onclick="rejectTransaction(${index})">✗ Reject</button>
+                        </td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        // Approve transaction
+        function approveTransaction(index) {
+            allTransactions[index].status = 'Approved';
+            localStorage.setItem('deposits', JSON.stringify(allTransactions));
+            loadTransactions();
+            alert('✅ Transaction approved!');
+        }
+
+        // Reject transaction
+        function rejectTransaction(index) {
+            allTransactions[index].status = 'Rejected';
+            localStorage.setItem('deposits', JSON.stringify(allTransactions));
+            loadTransactions();
+            alert('❌ Transaction rejected!');
+        }
+
+        // Clock Functions
         function updateClock(timezone, tzConfig) {
             try {
-                // Get current time in the specified timezone
                 const formatter = new Intl.DateTimeFormat('en-US', {
                     timeZone: timezone,
                     year: 'numeric',
@@ -279,13 +930,11 @@
                 const time = `${timeObj.hour}:${timeObj.minute}:${timeObj.second}`;
                 const date = `${timeObj.month}/${timeObj.day}/${timeObj.year}`;
 
-                // Update DOM
                 const clockElement = document.getElementById(tzConfig.element);
                 const dateElement = document.getElementById(tzConfig.dateElement);
                 
                 if (clockElement) {
                     clockElement.textContent = time;
-                    // Add tick animation
                     clockElement.style.animation = 'none';
                     setTimeout(() => {
                         clockElement.style.animation = 'pulse 1s ease-in-out infinite';
@@ -301,24 +950,18 @@
             }
         }
 
-        // Update all clocks
         function updateAllClocks() {
             Object.values(timeZones).forEach(tzConfig => {
                 updateClock(tzConfig.name, tzConfig);
             });
         }
 
-        // Initialize clocks
         function initClocks() {
             updateAllClocks();
-            // Update every second
             setInterval(updateAllClocks, 1000);
         }
 
-        // Start the clocks when DOM is loaded
         document.addEventListener('DOMContentLoaded', initClocks);
-
-        // Also update immediately on page visibility change
         document.addEventListener('visibilitychange', () => {
             if (!document.hidden) {
                 updateAllClocks();
